@@ -1,0 +1,18 @@
+<!-- Courbe -->
+<div class="tab-pane is-active">
+    <div class="container">
+        <!-- Affichage courbe -->
+        <div class="container level-item">
+        <canvas id="myChart"></canvas>
+        </div>
+    </div>
+</div>
+
+{{outlet}}
+
+<script>
+    document.querySelectorAll("nav.tabs li").forEach(function(navEl) {
+        navEl.classList.remove("is-active");
+    });
+    document.getElementById("pane-4").classList.add("is-active");
+</script>

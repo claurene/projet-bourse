@@ -1,0 +1,47 @@
+<!-- Gain -->
+<div class="tab-pane is-active">
+    <div class="container">
+
+        <!-- Affichage gain -->
+        <section class="section">
+            <div class="container level-item">
+            <span class="is-size-3">Gain actuel : {{format-color model.total}}</span>                
+            </div>
+        </section>
+
+        <!-- Historique -->
+        <section class="section">
+            <div class="container level-item">
+                <p class="title is-3 is-spaced">Historique des gains</p>
+            </div>
+            <div class="container level-item">
+                <table class="table">
+                <thead>
+                    <tr>
+                    <th>DATE</th>
+                    <th>GAIN (€)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Données de test pour l'affichage -->
+                    {{#each model.gains as |gain|}}
+                        <tr>
+                            <th>{{format-date gain.date}}</th>
+                            <th>{{format-color gain.amount}}</th>
+                        </tr>
+                    {{/each}}
+                </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>
+
+{{outlet}}
+
+<script>
+    document.querySelectorAll("nav.tabs li").forEach(function(navEl) {
+        navEl.classList.remove("is-active");
+    });
+    document.getElementById("pane-3").classList.add("is-active");
+</script>

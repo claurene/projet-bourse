@@ -1,0 +1,101 @@
+<!-- Actions-->
+<div class="tab-pane is-active">
+<div class="columns">
+
+    <!-- Section rechercher parmis toutes les actions -->
+    <div class="column is-half">
+    
+        <!-- Recherche -->
+        <div class="container">
+        <div class="field has-addons">
+            <div class="control">
+            {{input class="input" type="text" placeholder="Recherche..." value=symbol}}
+            </div>
+            <div class="control">
+            <a class="button is-primary" {{action 'searchSymbol'}}>
+                <span class="icon is-small"><i class="fas fa-search" aria-hidden="true"></i></span>
+            </a>
+            </div>
+        </div>   
+        </div>
+    
+        <!-- Liste-->
+        <div class="container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th><abbr title="Symbole">SYM</abbr></th>
+                <th>Nom</th>
+                <th>Voir</th>
+            </tr>
+            </thead>
+            <!-- TODO: éventuellement tfoot si grande table -->
+            <tbody>
+            <!-- Données de test pour l'affichage -->
+            {{#each model.stocks as |stock|}}
+                <tr>
+                    <th>{{stock.[1. symbol]}}</th>
+                    <th>{{stock.[2. name]}}</th>
+                    <th>
+                    <div class="control">
+                        <a class="button is-small is-primary" {{action 'setSelected' stock.[1. symbol]}}>
+                        <span class="icon is-small"><i class="fas fa-info" aria-hidden="true"></i></span>
+                        </a>
+                    </div>
+                    </th>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+        </div>
+    </div>
+
+    <!-- Section acheter une action sélectionnée -->
+    <div class="column is-half">
+    <!-- Liste-->
+    <div class="container">
+        <h2>Action sélectionnée :</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th><abbr title="Symbole">SYM</abbr></th>
+                <th><abbr title="Prix d'achat (€)">PA (€)</abbr></th>
+                <th>Achat</th>
+                <!-- TODO: nbr possédé ? -->
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Données de test pour l'affichage -->
+            {{#if model.selected}}
+                <tr>
+                    <th>{{model.selected.[01. symbol]}}</th>
+                    <th>{{model.selected.[05. price]}}</th>
+                    <th>
+                        <div class="field has-addons">
+                            <div class="control">
+                                {{input class="input is-small" type="number" min=1 value=number}}
+                            </div>
+                            <div class="control">
+                            <a class="button is-small is-danger" {{action 'buyStock' model.selected.[01. symbol] number}}>
+                                <span class="icon is-small"><i class="fas fa-check" aria-hidden="true"></i></span>
+                            </a>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            {{/if}}
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+</div>
+
+{{outlet}}
+
+<script>
+    document.querySelectorAll("nav.tabs li").forEach(function(navEl) {
+        navEl.classList.remove("is-active");
+    });
+    document.getElementById("pane-1").classList.add("is-active");
+</script>

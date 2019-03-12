@@ -1,0 +1,52 @@
+<!-- Portefeuille -->
+<div class="tab-pane is-active">
+    <div class="container"> <!-- class content => table width 100% -->
+        <!-- Liste des actions -->
+        <div class="container level-item">
+        <table class="table">
+            <thead>
+            <tr>
+                <th><abbr title="Date d'achat">DATE</abbr></th>
+                <th><abbr title="Symbole">SYM</abbr></th>
+                <th><abbr title="Nombre">NBR</abbr></th>
+                <th><abbr title="Prix d'achat (€)">PA (€)</abbr></th>
+                <th>Vendre</th>
+            </tr>
+            </thead>
+            <!-- TODO: éventuellement tfoot si grande table -->
+            <tbody>
+            <!-- Données de test pour l'affichage -->
+            {{#each model as |stock index|}}
+                <tr>
+                    <th>{{format-date stock.[date]}}</th>
+                    <th>{{stock.[symbol]}}</th>
+                    <th>{{stock.[nbr]}}</th>
+                    <th>{{stock.[price]}}</th>
+                    <th>
+                        <div class="field has-addons">
+                            <div class="control">
+                                {{input class="input is-small" type="number" value=(get number index) min=1 max=(format-integer stock.[nbr])}} <!-- TODO: max = current max -->
+                            </div>
+                            <div class="control">
+                            <a class="button is-small is-danger" {{action 'sellStock' stock.[_id] (get number index) stock.[price] stock.[symbol]}}>
+                                <span class="icon is-small"><i class="fas fa-euro-sign" aria-hidden="true"></i></span>
+                            </a>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+
+{{outlet}}
+
+<script>
+    document.querySelectorAll("nav.tabs li").forEach(function(navEl) {
+        navEl.classList.remove("is-active");
+    });
+    document.getElementById("pane-2").classList.add("is-active");
+</script>

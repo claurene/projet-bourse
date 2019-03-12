@@ -1,0 +1,61 @@
+{{!-- The following component displays Ember's default welcome message. --}}
+{{!--welcome-page--}}
+{{!-- Feel free to remove this! --}}
+
+<!-- banner + navigation -->
+<section class="hero is-primary">      
+    <!-- Hero content: will be in the middle -->
+    <div class="hero-body">
+    <div class="container has-text-centered">
+        <h1 class="title">
+        La bourse
+        </h1>
+        <!--h2 class="subtitle">
+        Subtitle
+        </h2-->
+    </div>
+    </div>
+
+    <!-- Hero footer: will stick at the bottom -->
+    <div class="hero-foot">
+    <nav class="tabs is-boxed is-centered">
+        <div class="container">
+        <ul>
+            <li id="pane-1" class="is-active">
+            <a href="/stocks">
+                <span class="icon is-small"><i class="fas fa-list-ul" aria-hidden="true"></i></span>
+                <span>Actions</span>
+            </a>
+            </li>
+            <li id="pane-2">
+            <a href="/wallet">
+                <span class="icon is-small"><i class="fas fa-wallet" aria-hidden="true"></i></span>
+                <span>Portefeuille</span>
+            </a>
+            </li>
+            <li id="pane-3">
+            <a href="/gains">
+                <span class="icon is-small"><i class="fas fa-euro-sign" aria-hidden="true"></i></span> <!-- or hand-holding-usd -->
+                <span>Gain</span>
+            </a>
+            </li>
+            <li id="pane-4">
+            <a href="/chart">
+                <span class="icon is-small"><i class="fas fa-chart-line" aria-hidden="true"></i></span>
+                <span>Courbe</span>
+            </a>
+            </li>
+        </ul>
+        </div>
+    </nav>
+    </div>
+</section>
+
+<!-- Contenu des onglets -->
+<section class="section">
+    <div class="container">
+        <div class="tab-content">
+            {{outlet}}
+        </div>
+    </div>
+</section>
