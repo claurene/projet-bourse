@@ -1,0 +1,22 @@
+{
+  "name": "miageserver",
+  "version": "1.0.0",
+  "description": "Serveur de test pour le cours MIAGE",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "MIAGE",
+    "server",
+    "coursalacon"
+  ],
+  "author": "christophe.bouthier@telecomnancy.eu",
+  "license": "CECILL-B",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.4.9",
+    "request": "^2.88.0"
+  }
+}
