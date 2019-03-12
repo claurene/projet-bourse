@@ -9,9 +9,9 @@ const Router = EmberRouter.extend({
 Router.map(function() {
   this.route('stocks', {path: '/stocks'});
   this.route('stocks', {path: '/stocks/:symbol'});
-  this.route('wallet');
+  /* this.route('wallet');
   this.route('gains');
-  this.route('chart');
+  this.route('chart'); */
 });
 
 export default Router;

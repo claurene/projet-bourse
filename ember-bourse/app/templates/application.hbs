@@ -21,26 +21,26 @@
     <nav class="tabs is-boxed is-centered">
         <div class="container">
         <ul>
-            <li id="pane-1" class="is-active">
-            <a href="/stocks">
+            <li data-target="pane-1" class="is-active">
+            <a> {{!--  href="#pane-1" --}}
                 <span class="icon is-small"><i class="fas fa-list-ul" aria-hidden="true"></i></span>
                 <span>Actions</span>
             </a>
             </li>
-            <li id="pane-2">
-            <a href="/wallet">
+            <li data-target="pane-2">
+            <a>
                 <span class="icon is-small"><i class="fas fa-wallet" aria-hidden="true"></i></span>
                 <span>Portefeuille</span>
             </a>
             </li>
-            <li id="pane-3">
-            <a href="/gains">
+            <li data-target="pane-3">
+            <a>
                 <span class="icon is-small"><i class="fas fa-euro-sign" aria-hidden="true"></i></span> <!-- or hand-holding-usd -->
                 <span>Gain</span>
             </a>
             </li>
-            <li id="pane-4">
-            <a href="/chart">
+            <li data-target="pane-4">
+            <a>
                 <span class="icon is-small"><i class="fas fa-chart-line" aria-hidden="true"></i></span>
                 <span>Courbe</span>
             </a>
@@ -59,3 +59,44 @@
         </div>
     </div>
 </section>
+
+<script>
+    var allNavs = document.querySelectorAll("nav.tabs li");
+    console.log(allNavs)
+    allNavs.forEach(function(navEl) {
+        navEl.onclick = function() { selectOnglet(this.dataset.target); }
+    });
+
+    function selectOnglet(target) {
+        if (target) { // not undefined
+            // selection onglet
+            allNavs.forEach(function(navEl) {
+                if (navEl.dataset.target == target) {
+                    navEl.classList.add("is-active");
+                } else {
+                    navEl.classList.remove("is-active");
+                }
+            });
+
+            // affichage contenu de l'onglet
+            var tabs = document.querySelectorAll(".tab-pane");
+
+            tabs.forEach(function(tab) {
+                if (tab.id == target) {
+                    tab.style.display = "block";
+                } else {
+                    tab.style.display = "none";
+                }
+            });
+
+            //window.location.hash = target;
+        }/* else {
+            selectOnglet("pane-1");
+        }*/
+    }
+
+    selectOnglet("pane-1");
+
+    // Navigation with #
+    //selectOnglet(location.hash.split('#')[1]);
+</script>

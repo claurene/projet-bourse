@@ -1,5 +1,5 @@
 <!-- Actions-->
-<div class="tab-pane is-active">
+<div class="tab-pane is-active" id="pane-1">
 <div class="columns">
 
     <!-- Section rechercher parmis toutes les actions -->
@@ -73,10 +73,10 @@
                     <th>
                         <div class="field has-addons">
                             <div class="control">
-                                {{input class="input is-small" type="number" min=1 value=number}}
+                                {{input class="input is-small" type="number" min=1 value=s_number}}
                             </div>
                             <div class="control">
-                            <a class="button is-small is-danger" {{action 'buyStock' model.selected.[01. symbol] number}}>
+                            <a class="button is-small is-danger" {{action 'buyStock' model.selected.[01. symbol] s_number}}>
                                 <span class="icon is-small"><i class="fas fa-check" aria-hidden="true"></i></span>
                             </a>
                             </div>
@@ -91,11 +91,104 @@
 </div>
 </div>
 
+<!-- Portefeuille -->
+<div class="tab-pane" id="pane-2">
+    <div class="container"> <!-- class content => table width 100% -->
+        <!-- Liste des actions -->
+        <div class="container level-item">
+        <table class="table">
+            <thead>
+            <tr>
+                <th><abbr title="Date d'achat">DATE</abbr></th>
+                <th><abbr title="Symbole">SYM</abbr></th>
+                <th><abbr title="Nombre">NBR</abbr></th>
+                <th><abbr title="Prix d'achat (€)">PA (€)</abbr></th>
+                <th>Vendre</th>
+            </tr>
+            </thead>
+            <!-- TODO: éventuellement tfoot si grande table -->
+            <tbody>
+            <!-- Données de test pour l'affichage -->
+            {{#each model.wallet as |stock index|}}
+                <tr>
+                    <th>{{format-date stock.[date]}}</th>
+                    <th>{{stock.[symbol]}}</th>
+                    <th>{{stock.[nbr]}}</th>
+                    <th>{{stock.[price]}}</th>
+                    <th>
+                        <div class="field has-addons">
+                            <div class="control">
+                                {{input class="input is-small" type="number" value=(get w_number index) min=1 max=(format-integer stock.[nbr])}} <!-- TODO: max = current max -->
+                            </div>
+                            <div class="control">
+                            <a class="button is-small is-danger" {{action 'sellStock' stock.[_id] (get w_number index) stock.[price] stock.[symbol]}}>
+                                <span class="icon is-small"><i class="fas fa-euro-sign" aria-hidden="true"></i></span>
+                            </a>
+                            </div>
+                        </div>
+                    </th>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+
+<!-- Gain -->
+<div class="tab-pane is-active" id="pane-3">
+    <div class="container">
+
+        <!-- Affichage gain -->
+        <section class="section">
+            <div class="container level-item">
+            <span class="is-size-3">Gain actuel : {{format-color model.total}}</span>                
+            </div>
+        </section>
+
+        <!-- Historique -->
+        <section class="section">
+            <div class="container level-item">
+                <p class="title is-3 is-spaced">Historique des gains</p>
+            </div>
+            <div class="container level-item">
+                <table class="table">
+                <thead>
+                    <tr>
+                    <th>DATE</th>
+                    <th>GAIN (€)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Données de test pour l'affichage -->
+                    {{#each model.gains as |gain|}}
+                        <tr>
+                            <th>{{format-date gain.date}}</th>
+                            <th>{{format-color gain.amount}}</th>
+                        </tr>
+                    {{/each}}
+                </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>
+
+<!-- Courbe -->
+<div class="tab-pane is-active" id="pane-4">
+    <div class="container">
+        <!-- Affichage courbe -->
+        <div class="container level-item">
+        <canvas id="myChart"></canvas>
+        </div>
+    </div>
+</div>
+
 {{outlet}}
 
-<script>
+{{!-- <script>
     document.querySelectorAll("nav.tabs li").forEach(function(navEl) {
         navEl.classList.remove("is-active");
     });
     document.getElementById("pane-1").classList.add("is-active");
-</script>
+</script> --}}

@@ -2,10 +2,16 @@ import Controller from '@ember/controller';
 import $ from 'jquery';
 import swal from 'sweetalert'
 
+//TODO: refresh
 export default Controller.extend({
-    number: 1, // default stocks number
+    // STOCKS
+    s_number: 1, // default stocks number
+    // WALLET
+    // eslint-disable-next-line ember/avoid-leaking-state-in-ember-objects
+    w_number: [], // default stocks number
     actions: {
-        searchSymbol: function() {
+        // STOCKS
+        searchSymbol: function() { //TODO: fix submit
             let symbol = this.get("symbol");
             this.transitionToRoute('stocks', symbol);
         },
@@ -35,6 +41,67 @@ export default Controller.extend({
                     }
                 });
             }
+        },
+        // WALLET
+        sellStock: function(stock, nbr, prix, sym) {
+            let ctrl = this;
+            //$(event.target).data("id")
+            if (!nbr || !parseInt(nbr)) {
+                swal("Erreur", "Vous devez préciser un nombre d'actions valide.","error"); 
+            } else {
+                // Sans confirmation d'achat
+                $.ajax({url: "http://localhost:3000/wallet/"+stock+"/sell",
+                    type: 'post',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        nbr: nbr
+                    }),
+                    success: function(){
+                        swal("Action vendue", "Vous avez vendu "+nbr+" actions "+sym+".","success");
+                        ctrl.send('refreshPage');
+                    },
+                    error: function() {
+                        swal("Erreur", "Une erreur s'est produite, l'action "+sym+" n'a pas été vendue.","error");                 
+                    }
+                });
+                // Avec confirmation d'achat (plus coûteux)
+                /* $.ajax({url: "http://localhost:3000/stocks/"+sym, type: 'get'}).then(function(data){
+                    if (data) {
+                        let price = parseFloat(data["05. price"]);
+                        let total = parseFloat(parseInt(nbr)*(price-parseFloat(prix))).toFixed(2);
+                        swal({
+                            title: 'Êtes-vous sûr(e) ?',
+                            text: "Vous allez vendre "+nbr+" actions "+sym+" pour un gain total de "+total+" (prix actuel: "+price+")",
+                            type: 'warning',
+                            showCancelButton: true,
+                            cancelButtonText: 'Annuler',
+                            confirmButtonText: 'Confirmer'
+                          }, function(result){
+                            if (result) {
+                                $.ajax({url: "http://localhost:3000/wallet/"+stock+"/sell",
+                                    type: 'post',
+                                    contentType: 'application/json',
+                                    data: JSON.stringify({
+                                        nbr: nbr
+                                    }),
+                                    success: function(){
+                                        swal("Action vendue", "Vous avez vendu "+nbr+" actions "+sym+".","success");
+                                        ctrl.send('refreshPage');
+                                    },
+                                    error: function() {
+                                        swal("Erreur", "Une erreur s'est produite, l'action "+sym+" n'a pas été vendue.","error");                 
+                                    }
+                                });
+                            }
+                          });
+                    } else {
+                        // 404 not found
+                    }
+                }); */
+            }
+        },
+        toInteger: function(string) {
+            return parseInt(string);
         }
     }
 });
