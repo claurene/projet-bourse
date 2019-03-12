@@ -12,6 +12,7 @@ export default Controller.extend({
             if (!nbr || !parseInt(nbr)) {
                 swal("Erreur", "Vous devez préciser un nombre d'actions valide.","error"); 
             } else {
+                // Sans confirmation d'achat
                 $.ajax({url: "http://localhost:3000/wallet/"+stock+"/sell",
                     type: 'post',
                     contentType: 'application/json',
@@ -26,6 +27,7 @@ export default Controller.extend({
                         swal("Erreur", "Une erreur s'est produite, l'action "+sym+" n'a pas été vendue.","error");                 
                     }
                 });
+                // Avec confirmation d'achat (plus coûteux)
                 /* $.ajax({url: "http://localhost:3000/stocks/"+sym, type: 'get'}).then(function(data){
                     if (data) {
                         let price = parseFloat(data["05. price"]);

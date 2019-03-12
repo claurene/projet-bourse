@@ -9,7 +9,8 @@ export default Route.extend({
         $( document ).ready(function(){
             // Data
             $.ajax({url: "http://localhost:3000/gains", type: 'get'}).then(function(data){  
-                let gains = data.map((x, index) => {
+            data.reverse()    
+            let gains = data.map((x, index) => {
                     if (index>0) {
                         x["amount"]+=data[index-1]["amount"]
                     }  
