@@ -6,15 +6,12 @@ export default Route.extend({
     actions: {
         refreshPage: function() {
             this.refresh();
-        }
-    },
-    // CHART
-    //TODO: activate function
-    activate: function() {
-        // Format date
-        let options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+            this.send("drawChart");
+        },
+        drawChart: function() {
+            // Format date
+            let options = { year: 'numeric', month: 'numeric', day: 'numeric' };
 
-        $( document ).ready(function(){
             // Data
             $.ajax({url: "http://localhost:3000/gains", type: 'get'}).then(function(data){  
             data.reverse()    
@@ -78,8 +75,17 @@ export default Route.extend({
             }
             var chart = new Chart(ctx,config);
             });
+            
+        }
+    },
+    // CHART
+    activate: function() {
+        let route = this;
+        $( document ).ready(function(){
+            route.actions.drawChart();            
         });
     },
+    //TODO: handle localhost access error ??
     model(params){
         // STOCKS
         let stocks = [];
@@ -90,11 +96,11 @@ export default Route.extend({
         }
 
         // WALLET
-        let wallet = $.ajax({url: "http://localhost:3000/wallet", type: 'get'}); //TODO: handle error
+        let wallet = $.ajax({url: "http://localhost:3000/wallet", type: 'get'});
 
         // GAINS
-        let gains = $.ajax({url: "http://localhost:3000/gains", type: 'get'}); //TODO: handle error
-        let total = $.ajax({url: "http://localhost:3000/gains/total", type: 'get'}); //TODO: handle error
+        let gains = $.ajax({url: "http://localhost:3000/gains?limit=10", type: 'get'});
+        let total = $.ajax({url: "http://localhost:3000/gains/total", type: 'get'});
 
         return RSVP.hash({
             // STOCKS

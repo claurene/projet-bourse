@@ -283,7 +283,7 @@ app.route('/wallet/:id/sell')
 // ROUTES GAIN
 app.route('/gains')
   .get((req, res, next) => {
-    Gain.find({}, {}, {sort: { 'date' : -1 }}, (err, gains) => {
+    Gain.find({}, {}, {sort: { 'date' : -1 }, limit:parseInt(req.query.limit)}, (err, gains) => {
       if (err) {
         return next(err);
       } else {
