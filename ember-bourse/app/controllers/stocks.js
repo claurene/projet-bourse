@@ -52,7 +52,7 @@ export default Controller.extend({
                 swal("Erreur", "Vous devez préciser un nombre d'actions valide.","error"); 
             } else {
                 // Sans confirmation d'achat
-                $.ajax({url: "http://localhost:3000/wallet/"+stock+"/sell",
+                /*$.ajax({url: "http://localhost:3000/wallet/"+stock+"/sell",
                     type: 'post',
                     contentType: 'application/json',
                     data: JSON.stringify({
@@ -67,9 +67,9 @@ export default Controller.extend({
                 })
                 .done(function() {
                     ctrl.send('refreshPage');
-                });
+                });*/
                 // Avec confirmation d'achat (plus coûteux)
-                /* $.ajax({url: "http://localhost:3000/stocks/"+sym, type: 'get'}).then(function(data){
+                $.ajax({url: "http://localhost:3000/stocks/"+sym, type: 'get'}).then(function(data){
                     if (data) {
                         let price = parseFloat(data["05. price"]);
                         let total = parseFloat(parseInt(nbr)*(price-parseFloat(prix))).toFixed(2);
@@ -103,7 +103,7 @@ export default Controller.extend({
                     }
                 }).done(function() {
                     ctrl.send('refreshPage');
-                }); */
+                });
             }
         }/* ,
         toInteger: function(string) {

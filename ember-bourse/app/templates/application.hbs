@@ -62,7 +62,6 @@
 
 <script>
     var allNavs = document.querySelectorAll("nav.tabs li");
-    console.log(allNavs)
     allNavs.forEach(function(navEl) {
         navEl.onclick = function() { selectOnglet(this.dataset.target); }
     });
