@@ -302,7 +302,7 @@ app.route('/gains/total')
       if (err) {
         return next(err);
       } else {
-        res.json(gain[0].total); //TODO: handle error ?
+        gain[0] ? res.json(gain[0].total) : res.json(0); // handle error ok
       }
     });
   });
